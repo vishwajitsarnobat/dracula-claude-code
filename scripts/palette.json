@@ -1,0 +1,69 @@
+{
+  "source": "https://draculatheme.com/spec",
+  "dracula": {
+    "name": "Dracula",
+    "dark": true,
+    "colors": {
+      "background": "#282a36",
+      "current_line": "#6272a4",
+      "selection": "#44475a",
+      "foreground": "#f8f8f2",
+      "comment": "#6272a4",
+      "red": "#ff5555",
+      "orange": "#ffb86c",
+      "yellow": "#f1fa8c",
+      "green": "#50fa7b",
+      "cyan": "#8be9fd",
+      "purple": "#bd93f9",
+      "pink": "#ff79c6"
+    },
+    "ansi_bright": {
+      "red": "#ff6e6e",
+      "green": "#69ff94",
+      "yellow": "#ffffa5",
+      "purple": "#d6acff",
+      "pink": "#ff92df",
+      "cyan": "#a4ffff"
+    },
+    "ui": {
+      "floating": "#343746",
+      "background_lighter": "#424450",
+      "background_light": "#343746",
+      "background_dark": "#21222c",
+      "background_darker": "#191a21"
+    }
+  },
+  "alucard": {
+    "name": "Alucard",
+    "dark": false,
+    "colors": {
+      "background": "#fffbeb",
+      "current_line": "#6c664b",
+      "selection": "#cfcfde",
+      "foreground": "#1f1f1f",
+      "comment": "#6c664b",
+      "red": "#cb3a2a",
+      "orange": "#a34d14",
+      "yellow": "#846e15",
+      "green": "#14710a",
+      "cyan": "#036a96",
+      "purple": "#644ac9",
+      "pink": "#a3144d"
+    },
+    "ansi_bright": {
+      "red": "#d74c3d",
+      "green": "#198d0c",
+      "yellow": "#9e841a",
+      "purple": "#7862d0",
+      "pink": "#bf185a",
+      "cyan": "#047fb4"
+    },
+    "ui": {
+      "floating": "#efeddc",
+      "background_lighter": "#ece9df",
+      "background_light": "#dedccf",
+      "background_dark": "#ceccc0",
+      "background_darker": "#bcbab3"
+    }
+  }
+}

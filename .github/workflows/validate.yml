@@ -1,0 +1,59 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Themes match the generator
+        run: python3 scripts/generate.py --check
+
+      - name: Themes are valid for Claude Code
+        run: python3 scripts/validate.py
+
+      - name: Shell scripts parse
+        run: |
+          bash -n install.sh
+          bash -n uninstall.sh
+          bash -n scripts/screenshots.sh
+
+      - name: Shell scripts lint
+        run: shellcheck install.sh uninstall.sh scripts/screenshots.sh
+
+      - name: Installer round-trips into a sandbox config dir
+        run: |
+          export CLAUDE_CONFIG_DIR="$(mktemp -d)"
+          ./install.sh --activate dracula
+          test -f "$CLAUDE_CONFIG_DIR/themes/dracula.json"
+          python3 - <<'PY'
+          import json, os
+          settings = json.load(open(os.environ["CLAUDE_CONFIG_DIR"] + "/settings.json"))
+          assert settings["theme"] == "custom:dracula", settings
+          PY
+          ./uninstall.sh
+          test ! -f "$CLAUDE_CONFIG_DIR/themes/dracula.json"
+          grep -q '"theme": "dark"' "$CLAUDE_CONFIG_DIR/settings.json"
+
+      - name: Installer writes through a symlinked settings.json
+        run: |
+          export CLAUDE_CONFIG_DIR="$(mktemp -d)"
+          real="$(mktemp -d)/settings.json"
+          echo '{"model": "opus"}' > "$real"
+          ln -s "$real" "$CLAUDE_CONFIG_DIR/settings.json"
+          ./install.sh --activate alucard
+          test -L "$CLAUDE_CONFIG_DIR/settings.json"
+          grep -q '"theme": "custom:alucard"' "$real"
+          grep -q '"model": "opus"' "$real"
+          ./uninstall.sh
+          grep -q '"theme": "light"' "$real"
